@@ -59,7 +59,7 @@ class Article:
             name = key 
             article = value 
         
-        transaction = {'name': name, 'article_name': article}
+        transaction = {'name': name, 'article_name': [article], 'amount':'0.000000001'}
         try:
             Spicee.add_block(transaction)
             return True
