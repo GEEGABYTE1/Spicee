@@ -80,9 +80,12 @@ class Article:
     def print_chain(self):
         local_chain = Spicee.chain
         
-        for block in local_chain:
-            block.print_contents()
-            print('\n')
+        if len(local_chain) == 0:
+            print(colored("There are no articles on the chain"), 'red')
+        else:
+            for block in local_chain:
+                block.print_contents()
+                print('\n')
 
     def fetch_article(self):
         user_hash = str(input('Search by block Hash: '))
