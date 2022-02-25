@@ -107,7 +107,7 @@ class Article:
                             result = True
                         except KeyError:
                             website = data['website']
-                            webbrowser.open_new_tab(website)
+                            webbrowser.open(website, new=1, autoraise=True)
 
                     else:
                         continue
