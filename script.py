@@ -2,11 +2,15 @@ from blockchain import Blockchain
 import time
 from datetime import datetime
 from termcolor import colored
+from pymongo import MongoClient
 
 Spicee = Blockchain()
 
 
 class Article:
+
+    article_done
+
     
     def running(self):
         while True:
@@ -22,8 +26,19 @@ class Article:
         print('{}: {}'.format(initial_intro, now_date))
         print('\n')
         string = str(input('''-> '''))
-        print(string)
         time.sleep(0.5)
+        print('\n')
+        saved = colored("Saved... ", 'blue')
+        date = current_date.strftime("%m/%d/%Y, %H:%M:%S")
+        print('\n')
+        time.sleep(0.5)
+        
+        name_of_file = colored('name of file: ', 'cyan')
+        name = str(input(name_of_file))
+        print('-'*24)
+        
+
+
 
         
         
