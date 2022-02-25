@@ -4,4 +4,7 @@
 
 
 # Spicee Chain
- Create a node and token system
+
+## Creating a Node
+
+## Tokenizing
