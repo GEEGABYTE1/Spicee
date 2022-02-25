@@ -18,12 +18,9 @@ class Blockchain:
         new_block.generate_hash()
         # proof = proof_of_work(block)
         self.chain.append(new_block)
-        proof = self.proof_of_work(new_block)
         result = self.validate_chain()
-        if result == 'False':
-            pass 
-        else:
-            print(proof)
+        print(result)
+            
         
 
     def print_blocks(self):
