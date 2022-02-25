@@ -3,12 +3,10 @@ from blockchain import Blockchain
 import time
 from datetime import datetime
 from termcolor import colored
+import webbrowser
 
 
 Spicee = Blockchain()
-
-
-### EDIT ARTICLES BY REFERENCING THE CHAIN #### 
 
 class Article:
 
@@ -23,7 +21,10 @@ class Article:
                 self.write_article()
             elif user_prompt == '/fetch_article':
                 self.fetch_article()
-        
+            elif user_prompt == '/view_chain':
+                self.print_chain()
+            elif user_prompt == '/add_web':
+                self.add_web_article()
 
     def write_article(self):
         current_date = datetime.now()
@@ -51,8 +52,15 @@ class Article:
             Spicee.print_blocks()
         else:
             print(colored("There was an error adding the article to the chain", 'red'))
-        
 
+    def add_web_article(self):
+        name_of_file = colored('name of file: ', 'cyan')
+        name = str(input(name_of_file))
+        website = colored(input('website of article: '))
+        transaction = {'name': name, 'website': website, 'amount': '0.000000001'}
+        Spicee.add_block(transaction)
+        print(colored('{} has been added to the chain'.format(name), 'green'))
+        Spicee.print_blocks()
 
     def add_article_to_chain(self):
         name = None 
@@ -90,12 +98,17 @@ class Article:
                     block_hash = block.hash
                     if block_hash == user_hash:
                         print(data)
-                        article = data[1]['article']
-                        name = data[0]['name']
-                        print('Name: {}'.format(name))
-                        print('\n')
-                        print(article)
-                        result = True
+                        name = data['name']
+                        try:
+                            article = data['article']
+                            print('Name: {}'.format(name))
+                            print('\n')
+                            print(article)
+                            result = True
+                        except KeyError:
+                            website = data['website']
+                            webbrowser.open_new_tab(website)
+
                     else:
                         continue
                 
