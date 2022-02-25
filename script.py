@@ -1,3 +1,4 @@
+from platformdirs import user_runtime_dir
 from blockchain import Blockchain
 import time
 from datetime import datetime
@@ -18,6 +19,8 @@ class Article:
         while True:
             user_prompt = str(input(':'))
             user_prompt = user_prompt.strip(' ')
+            if user_prompt == '/write_article':
+                self.write_article()
         
 
     def write_article(self):
@@ -40,7 +43,7 @@ class Article:
         print('-'*24)
         self.article_done[name] = string
 
-        result = self.add_article_to_chain(self.article_done)
+        result = self.add_article_to_chain()
         if result == True:
             print('{} has been added to the chain'.format(name))
             Spicee.print_blocks()
@@ -48,13 +51,11 @@ class Article:
             print(colored("There was an error adding the article to the chain", 'red'))
         
 
-        
 
-
-    def add_article_to_chain(self, article):
+    def add_article_to_chain(self):
         name = None 
         article = None 
-        for key, value in article.items():
+        for key, value in self.article_done.items():
             name = key 
             article = value 
         
@@ -74,5 +75,5 @@ class Article:
         
 
 test = Article()
-print(test.write_article())
+print(test.running())
 
