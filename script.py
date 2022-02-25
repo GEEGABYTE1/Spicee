@@ -2,14 +2,16 @@ from blockchain import Blockchain
 import time
 from datetime import datetime
 from termcolor import colored
-from pymongo import MongoClient
+
 
 Spicee = Blockchain()
 
 
+### EDIT ARTICLES BY REFERENCING THE CHAIN #### 
+
 class Article:
 
-    article_done
+    article_done = {}
 
     
     def running(self):
@@ -36,15 +38,32 @@ class Article:
         name_of_file = colored('name of file: ', 'cyan')
         name = str(input(name_of_file))
         print('-'*24)
+        self.article_done[name] = string
+
+        result = self.add_article_to_chain(self.article_done)
+        if result == True:
+            print('{} has been added to the chain'.format(name))
+            Spicee.print_blocks()
+        else:
+            print(colored("There was an error adding the article to the chain", 'red'))
+        
+
         
 
 
-
+    def add_article_to_chain(self, article):
+        name = None 
+        article = None 
+        for key, value in article.items():
+            name = key 
+            article = value 
         
-        
-
-    def add_article_to_chain(self):
-        pass 
+        transaction = {'name': name, 'article_name': article}
+        try:
+            Spicee.add_block(transaction)
+            return True
+        except:
+            return False
 
 
     def print_chain(self):
