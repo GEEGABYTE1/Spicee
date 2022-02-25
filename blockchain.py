@@ -20,7 +20,7 @@ class Blockchain:
         self.chain.append(new_block)
         proof = self.proof_of_work(new_block)
         result = self.validate_chain()
-        if reuslt == 'False':
+        if result == 'False':
             pass 
         else:
             print(proof)
@@ -44,7 +44,7 @@ class Blockchain:
                 return False
         return True
 
-    def proof_of_work(self, block, difficulty=8):
+    def proof_of_work(self, block, difficulty=4):
         proof = block.generate_hash()
         while proof[:2] != "0" * difficulty:
             block.nonce += 1
