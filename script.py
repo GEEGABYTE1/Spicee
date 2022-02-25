@@ -21,6 +21,8 @@ class Article:
             user_prompt = user_prompt.strip(' ')
             if user_prompt == '/write_article':
                 self.write_article()
+            elif user_prompt == '/fetch_article':
+                self.fetch_article()
         
 
     def write_article(self):
@@ -72,7 +74,18 @@ class Article:
         
         for block in local_chain:
             block.print_contents()
-        
+
+    def fetch_article(self):
+        user_hash = str(input('Search by block Hash: '))
+        if len(user_hash) != 64:
+            print("The Hash inputted does not seem to match the 64-bit format.")
+        else:
+            for block in Spicee.chain:
+                current_hash = block.hash
+                article_data = block.transactions
+            
+
+
 
 test = Article()
 print(test.running())
