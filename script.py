@@ -39,6 +39,8 @@ class Article:
                 self.print_chain()
             elif user_prompt == '/add_web':
                 self.add_web_article()
+            elif user_prompt == '/view_publishers':
+                self.view_publishers()
 
     def write_article(self):
         current_date = datetime.now()
@@ -121,7 +123,23 @@ class Article:
         if len(token_hash) != 64:
             print("The hash is smaller than 64 characters")
         else:
-            for block in Spicee.chain:
+            self.view_pulishers()
+            user_publisher = str(input("Desired publisher Name: "))
+            user_publisher = user_publisher.strip(' ')
+            if user_publisher == 'n/a':
+                return 
+            else:
+                for block in Spicee.chain:
+                    if len(block.transactions) == 0:
+                        pass 
+                    else:
+                        transactions = block.transactions
+                        for publisher in transactions:
+                            if publisher['Name'] == user_publisher:
+                                return block
+    
+    def view_publishers(seflf):
+        for block in Spicee.chain:
                 if len(block.transactions) == 0:
                     pass 
                 else:
@@ -138,22 +156,7 @@ class Article:
                         print(publisher_owner)
                     print('\n')
 
-                    user_publisher = str(input("Desired publisher Name: "))
-                    user_publisher = user_publisher.strip(' ')
-                    if user_publisher == 'n/a':
-                        return 
-                    else:
-                        for block in Spicee.chain:
-                            if len(block.transactions) == 0:
-                                pass 
-                            else:
-                                transactions = block.transactions
-                                for publisher in transactions:
-                                    if publisher['Name'] == user_publisher:
-                                        return block
-                    
-                    
-
+                                
     def fetch_article(self):
         user_hash = str(input('Search by block Hash: '))
         result = False
