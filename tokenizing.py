@@ -24,7 +24,7 @@ class Publisher:
 test = Publisher()
 token = test.publishing_token()
 print('Token successfully Made: {}'.format(token))
-transactions = ['Token']
+transactions = [token]
 token_block  = Block(transactions, token)
 
 
