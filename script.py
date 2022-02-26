@@ -5,8 +5,8 @@ from datetime import datetime
 from termcolor import colored
 import webbrowser
 
-
 Spicee = Blockchain()
+
 
 class Article:
 
@@ -119,6 +119,6 @@ class Article:
                 print("Article not found")
         
         
-test = Article()
-print(test.running())
+#test = Article()
+#print(test.running())
 

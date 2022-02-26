@@ -20,7 +20,6 @@ class Blockchain:
         self.chain.append(new_block)
         result = self.validate_chain()
         print(result)
-            
         
 
     def print_blocks(self):
