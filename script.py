@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 from termcolor import colored
 import webbrowser
-from tokenizing import token_block
+from tokenizing import token_block      # Publishing Token Integration
 
 
 Spicee = Blockchain()
@@ -19,6 +19,8 @@ def add_token():
         Spicee.chain.append(token_block)
         print(token_block.generate_hash())
         print(Spicee.chain)
+
+    
 
 class Article:
 
@@ -69,8 +71,16 @@ class Article:
         name_of_file = colored('name of file: ', 'cyan')
         name = str(input(name_of_file))
         website = colored(input('website of article: '))
-        transaction = {'name': name, 'website': website, 'amount': '0.000000001'}
-        Spicee.add_block(transaction)
+        
+        publisher_input = str(input('Would you like to submit your article to a publishing company?: '))
+        if publisher_input == 'y':
+            desired_publisher_token = self.fetch_token()
+            desired_publisher_token_hash = desired_publisher_token.hash
+            transaction = {'name': name, 'publisher': desired_publisher_token_hash, 'website': website, 'amount': '0.000000001' }
+            Spicee.add_block(transaction)
+        else:
+            transaction = {'name': name, 'website': website, 'amount': '0.000000001'}
+            Spicee.add_block(transaction)
         print(colored('{} has been added to the chain'.format(name), 'green'))
         Spicee.print_blocks()
 
@@ -161,6 +171,11 @@ class Article:
                         name = data['name']
                         try:
                             article = data['article']
+                            publisher = data.get('publisher', None)
+                            if publisher == None:
+                                pass 
+                            else:
+                                print('Publisher: {}'.format(publisher))
                             print('Name: {}'.format(name))
                             print('\n')
                             print(article)
