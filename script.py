@@ -1,12 +1,24 @@
 
+from tkinter import E
 from blockchain import Blockchain
 import time
 from datetime import datetime
 from termcolor import colored
 import webbrowser
+from tokenizing import token_block
+
 
 Spicee = Blockchain()
 
+def add_token():
+    genesis_block = Spicee.chain[0]
+    rest_of_chain = Spicee.chain[1:]
+    if len(rest_of_chain) == 0:
+        token_block.generate_hash()
+        
+        Spicee.chain.append(token_block)
+        print(token_block.generate_hash())
+        print(Spicee.chain)
 
 class Article:
 
@@ -69,12 +81,19 @@ class Article:
             name = key 
             article = value 
         
-        transaction = {'name': name, 'article': [article], 'amount':'0.000000001'}
-        try:
+        publisher_input = str(input('Would you like to submit your article to a publishing company?: '))
+        if publisher_input == 'y':
+            desired_publisher_token = self.fetch_token()
+            desired_publisher_token_hash = desired_publisher_token.hash
+            transaction = {'name': name, 'article': [article], 'publisher': desired_publisher_token_hash, 'amount':'0.000000001'}
             Spicee.add_block(transaction)
-            return True
-        except:
-            return False
+        else:
+            transaction = {'name': name, 'article': [article], 'amount':'0.000000001'}
+            try:
+                Spicee.add_block(transaction)
+                return True
+            except:
+                return False
 
 
     def print_chain(self):
@@ -86,6 +105,44 @@ class Article:
             for block in local_chain:
                 block.print_contents()
                 print('\n')
+
+    def fetch_token(self):
+        token_hash = str(input('Please type in the publisher hash: '))
+        if len(token_hash) != 64:
+            print("The hash is smaller than 64 characters")
+        else:
+            for block in Spicee.chain:
+                if len(block.transactions) == 0:
+                    pass 
+                else:
+                    transactions = block.transactions
+                    print('\n')
+                    print("Here are the current publishers: ")
+                    for publisher in transactions:
+                        print('-'*24)
+                        publisher_name = publisher['Name']
+                        publisher_genre = publisher['Genre']
+                        publisher_owner = publisher['Owners/Creators']
+                        print(publisher_name)
+                        print(publisher_genre)
+                        print(publisher_owner)
+                    print('\n')
+
+                    user_publisher = str(input("Desired publisher Name: "))
+                    user_publisher = user_publisher.strip(' ')
+                    if user_publisher == 'n/a':
+                        return 
+                    else:
+                        for block in Spicee.chain:
+                            if len(block.transactions) == 0:
+                                pass 
+                            else:
+                                transactions = block.transactions
+                                for publisher in transactions:
+                                    if publisher['Name'] == user_publisher:
+                                        return block
+                    
+                    
 
     def fetch_article(self):
         user_hash = str(input('Search by block Hash: '))
@@ -119,6 +176,7 @@ class Article:
                 print("Article not found")
         
         
-#test = Article()
-#print(test.running())
+test = Article()
+add_token()
+print(test.fetch_token())
 
