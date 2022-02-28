@@ -26,8 +26,8 @@ test = Publisher()
 token = test.publishing_token()
 print('Token successfully Made: {}'.format(token))
 transactions = [token]
-token_block  = Block(transactions, token)
-
+token_block  = Block(transactions, '0')
+print(token_block)
 
 
         
