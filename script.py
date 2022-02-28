@@ -20,6 +20,7 @@ def add_token():
         print(token_block.generate_hash())
         print(Spicee.chain)
 
+genres = []
     
 
 class Article:
