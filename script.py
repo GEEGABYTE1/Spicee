@@ -128,11 +128,24 @@ class Article:
             desired_publisher_token = self.fetch_token()
             desired_publisher_token_hash = desired_publisher_token.hash
             transaction = {'name': name, 'publisher': desired_publisher_token_hash, 'website': website, 'amount': '0.000000001' }
-            Spicee.add_block(transaction)
+            
         else:
             transaction = {'name': name, 'website': website, 'amount': '0.000000001'}
             Spicee.add_block(transaction)
+        genre_input = str(input("Would you like to submit your article to a genre? :"))
+        if genre_input == 'y':
+            while True:
+                desired_genre = str(input("Name of genreL "))
+                desired_genre = desired_genre.strip(' ')
+                if desired_genre in genres:
+                    print(colored("Genre Found", 'green'))
+                    transaction['Genre'] = desired_genre 
+                    break 
+                else:
+                    print(colored('Genre not Found', 'red'))
+                    print('\n')
         print(colored('{} has been added to the chain'.format(name), 'green'))
+        Spicee.add_block(transaction)
         Spicee.print_blocks()
 
     def add_article_to_chain(self):
@@ -150,11 +163,28 @@ class Article:
             Spicee.add_block(transaction)
         else:
             transaction = {'name': name, 'article': [article], 'amount':'0.000000001'}
-            try:
-                Spicee.add_block(transaction)
-                return True
-            except:
-                return False
+        
+        self.view_genres()
+        print('-'*24)
+        time.sleep(0.2)
+        print('\n')
+        genre_input = str(input("Would you like to submit your article to a genre? :"))
+        if genre_input == 'y':
+            while True:
+                desired_genre = str(input("Name of genre: "))
+                desired_genre = desired_genre.strip(' ')
+                if desired_genre in genres:
+                    print(colored("Genre Found", 'green'))
+                    transaction['Genre'] = desired_genre
+                    break
+                else:
+                    print(colored('Genre not Found', 'red'))
+                    print('\n')
+        try:
+            Spicee.add_block(transaction)
+            return True
+        except:
+            return False
 
 
     def print_chain(self):
@@ -226,14 +256,20 @@ class Article:
                         try:
                             article = data['article']
                             publisher = data.get('publisher', None)
+                            genre = data.get('Genre', None)
                             if publisher == None:
                                 pass 
                             else:
                                 print('Publisher: {}'.format(publisher))
-                            print('Name: {}'.format(name))
-                            print('\n')
-                            print(article)
-                            result = True
+                                print('Name: {}'.format(name))
+                                if genre == None:
+                                    pass 
+                                else:
+                                    print('Genre: {}'.format(genre))
+
+                                print('\n')
+                                print(article)
+                                result = True
                         except KeyError:
                             website = data['website']
                             webbrowser.open(website, new=1, autoraise=True)
