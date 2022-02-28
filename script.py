@@ -9,6 +9,7 @@ import webbrowser
 from tokenizing import token_block      # Publishing Token Integration
 from genre_token import genre_block
 
+
 Spicee = Blockchain()
 genres = []
 
@@ -26,7 +27,7 @@ def add_token():
         else:
             pass
     
-    token_block.generate_hash()
+    
     Spicee.chain.append(token_block)
     print(token_block.generate_hash())
     print(Spicee.chain)
@@ -47,10 +48,6 @@ def add_genre():
         Spicee.chain.append(genre_block)
         print(genre_block.generate_hash())
         print(Spicee.chain)
-    
-        
-
-
     
 
 class Article:
@@ -83,10 +80,11 @@ class Article:
                 if block.hash == genre_block.generate_hash():
                     genres = block.transactions
                     for genre in genres:
-                        genre_name = genre[0]
-                        genre_publisher = genre[-1]
+                        print('-'*24)
+                        genre_name = genre['Name']
+                        genre_publisher = genre['Publisher']
                         print('Genre: {}'.format(genre_name))
-                        print('Publishers under the Genre: {}').format(genre_publisher)
+                        print('Publishers under the Genre: {}'.format(genre_publisher))
 
                 
 
@@ -131,7 +129,8 @@ class Article:
             
         else:
             transaction = {'name': name, 'website': website, 'amount': '0.000000001'}
-            Spicee.add_block(transaction)
+            
+        print('\n')
         genre_input = str(input("Would you like to submit your article to a genre? :"))
         if genre_input == 'y':
             while True:
@@ -202,24 +201,29 @@ class Article:
         if len(token_hash) != 64:
             print("The hash is smaller than 64 characters")
         else:
-            self.view_pulishers()
+            self.view_publishers()
             user_publisher = str(input("Desired publisher Name: "))
             user_publisher = user_publisher.strip(' ')
             if user_publisher == 'n/a':
                 return 
             else:
+                
                 for block in Spicee.chain:
-                    if len(block.transactions) == 0:
-                        pass 
-                    else:
-                        if block.hash == token_block.generate_hash():
-                            transactions = block.transactions
-                            for publisher in transactions:
-                                if publisher['Name'] == user_publisher:
-                                    return block
-    
-    def view_publishers(seflf):
+                    try:
+                        if len(block.transactions) == 0:
+                            pass 
+                        else:
+                            if block.hash == token_block.generate_hash():
+                                transactions = block.transactions
+                                for publisher in transactions:
+                                    if publisher['Name'] == user_publisher:
+                                        return block
+                    except:
+                        continue
+        
+    def view_publishers(self):
         for block in Spicee.chain:
+            try:
                 if len(block.transactions) == 0:
                     pass 
                 else:
@@ -232,10 +236,12 @@ class Article:
                             publisher_name = publisher['Name']
                             publisher_genre = publisher['Genre']
                             publisher_owner = publisher['Owners/Creators']
-                            print(publisher_name)
-                            print(publisher_genre)
-                            print(publisher_owner)
+                            print('Name: {}'.format(publisher_name))
+                            print('Genre: {}'.format(publisher_genre))
+                            print('Owners: {}'.format(publisher_owner))
                         print('\n')
+            except:
+                continue
 
                                 
     def fetch_article(self):
