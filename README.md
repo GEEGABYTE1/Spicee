@@ -54,3 +54,10 @@ The Spicee Chain runs on the Sha-256 hash protocol along
 with Proof-Of-Work. Although it Proof-Of-Work is not 
 as energy-efficient, we ensured that the difficulty for the program to validate the chain is to four zeros instead of eight or sixteen. This reduces energy consumption by over 60% supporting the third-generation rights of having a clean enviornment.
 
+# More Information
+
+If you want more information or some background information about the project or my research visit my website: 
+
+Made in Python for the HRF. 
+
+Let's made a difference! 
