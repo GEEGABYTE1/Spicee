@@ -6,7 +6,7 @@ from datetime import datetime
 from termcolor import colored
 import webbrowser
 from tokenizing import token_block      # Publishing Token Integration
-
+from genre_token import genre_block
 
 Spicee = Blockchain()
 
@@ -15,12 +15,23 @@ def add_token():
     rest_of_chain = Spicee.chain[1:]
     if len(rest_of_chain) == 0:
         token_block.generate_hash()
-        
         Spicee.chain.append(token_block)
         print(token_block.generate_hash())
         print(Spicee.chain)
 
+
 genres = []
+
+def add_genre():
+    genesis_block = Spicee.chain[0]
+    rest_of_chain = Spicee.chain[1:]
+    if len(rest_of_chain) == 0:
+        genre_block.generate_hash()
+        Spicee.chain.append(genre_block)
+        print(genre_block.generate_hash())
+        print(Spicee.chain)
+
+
     
 
 class Article:
