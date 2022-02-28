@@ -69,6 +69,8 @@ class Article:
                 self.add_web_article()
             elif user_prompt == '/view_publishers':
                 self.view_publishers()
+            elif user_prompt == '/view_genres':
+                self.view_genres()
             elif user_prompt == '/view_articles':
                 self.view_articles()
             
@@ -87,7 +89,10 @@ class Article:
                         print('Publishers under the Genre: {}'.format(genre_publisher))
 
                 
-
+    def view_articles(self):
+        Spicee.print_blocks()
+        
+        
 
     def write_article(self):
         current_date = datetime.now()
