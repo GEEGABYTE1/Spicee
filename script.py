@@ -91,7 +91,7 @@ class Article:
                 
     def view_articles(self):
         Spicee.print_blocks()
-        
+
         
 
     def write_article(self):
