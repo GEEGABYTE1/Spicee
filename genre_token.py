@@ -6,7 +6,7 @@ class Genre:
         name = ''
         publishers = [] 
 
-        return name, publishers
+        return {'Name': name, 'Publisher':publishers}
 
 
 genre = Genre()

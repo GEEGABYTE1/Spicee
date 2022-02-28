@@ -10,25 +10,43 @@ from tokenizing import token_block      # Publishing Token Integration
 from genre_token import genre_block
 
 Spicee = Blockchain()
+genres = []
 
 def add_token():
     genesis_block = Spicee.chain[0]
     rest_of_chain = Spicee.chain[1:]
+
+    genre_transaction = token_block.transactions[0]
+    genre = genre_transaction.get('Genre', None)
+    if genre == None:
+        pass 
+    else:
+        if not genre in genres:
+            genres.append(genre)
+        else:
+            pass
+    
     token_block.generate_hash()
     Spicee.chain.append(token_block)
     print(token_block.generate_hash())
     print(Spicee.chain)
 
 
-genres = []
 
 def add_genre():
     genesis_block = Spicee.chain[0]
     rest_of_chain = Spicee.chain[1:]
-    genre_block.generate_hash() 
-    Spicee.chain.append(genre_block)
-    print(genre_block.generate_hash())
-    print(Spicee.chain)
+
+    genre_name_transaction = genre_block.transactions[0]
+    genre = genre_name_transaction.get('Name', None)
+    if genre in genres:
+        print(colored('Genre already added'))
+    else:
+        genres.append(genre)
+        genre_block.generate_hash() 
+        Spicee.chain.append(genre_block)
+        print(genre_block.generate_hash())
+        print(Spicee.chain)
     
         
 
@@ -57,7 +75,7 @@ class Article:
             elif user_prompt == '/view_articles':
                 self.view_articles()
             
-    def view_articles(self):
+    def view_genres(self):
         for block in Spicee.chain:
             if len(block.transactions) == 0:
                 continue
@@ -67,10 +85,10 @@ class Article:
                     for genre in genres:
                         genre_name = genre[0]
                         genre_publisher = genre[-1]
+                        print('Genre: {}'.format(genre_name))
+                        print('Publishers under the Genre: {}').format(genre_publisher)
 
                 
-
-
 
 
     def write_article(self):
@@ -230,5 +248,5 @@ class Article:
 test = Article()
 add_token()
 add_genre()
-print(test.view_articles())
+print(test.view_genres())
 

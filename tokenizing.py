@@ -1,6 +1,7 @@
 from block import Block
 
 
+
 class Publisher:
 
 
