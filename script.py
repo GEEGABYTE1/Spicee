@@ -257,6 +257,7 @@ class Article:
                     data = block.transactions
                     block_hash = block.hash
                     if block_hash == user_hash:
+                        result = True
                         print(data)
                         name = data['name']
                         try:
@@ -275,7 +276,7 @@ class Article:
 
                                 print('\n')
                                 print(article)
-                                result = True
+                                
                         except KeyError:
                             website = data['website']
                             webbrowser.open(website, new=1, autoraise=True)
@@ -290,5 +291,5 @@ class Article:
 test = Article()
 add_token()
 add_genre()
-print(test.view_genres())
+print(test.running())
 
