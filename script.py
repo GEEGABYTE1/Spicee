@@ -1,4 +1,5 @@
 
+from lib2to3.pgen2 import token
 from tkinter import E
 from blockchain import Blockchain
 import time
@@ -13,11 +14,10 @@ Spicee = Blockchain()
 def add_token():
     genesis_block = Spicee.chain[0]
     rest_of_chain = Spicee.chain[1:]
-    if len(rest_of_chain) == 0:
-        token_block.generate_hash()
-        Spicee.chain.append(token_block)
-        print(token_block.generate_hash())
-        print(Spicee.chain)
+    token_block.generate_hash()
+    Spicee.chain.append(token_block)
+    print(token_block.generate_hash())
+    print(Spicee.chain)
 
 
 genres = []
@@ -25,11 +25,12 @@ genres = []
 def add_genre():
     genesis_block = Spicee.chain[0]
     rest_of_chain = Spicee.chain[1:]
-    if len(rest_of_chain) == 0:
-        genre_block.generate_hash()
-        Spicee.chain.append(genre_block)
-        print(genre_block.generate_hash())
-        print(Spicee.chain)
+    genre_block.generate_hash() 
+    Spicee.chain.append(genre_block)
+    print(genre_block.generate_hash())
+    print(Spicee.chain)
+    
+        
 
 
     
@@ -53,6 +54,24 @@ class Article:
                 self.add_web_article()
             elif user_prompt == '/view_publishers':
                 self.view_publishers()
+            elif user_prompt == '/view_articles':
+                self.view_articles()
+            
+    def view_articles(self):
+        for block in Spicee.chain:
+            if len(block.transactions) == 0:
+                continue
+            else:
+                if block.hash == genre_block.generate_hash():
+                    genres = block.transactions
+                    for genre in genres:
+                        genre_name = genre[0]
+                        genre_publisher = genre[-1]
+
+                
+
+
+
 
     def write_article(self):
         current_date = datetime.now()
@@ -123,7 +142,7 @@ class Article:
     def print_chain(self):
         local_chain = Spicee.chain
         
-        if len(local_chain) == 0:
+        if len(local_chain) == 1:
             print(colored("There are no articles on the chain"), 'red')
         else:
             for block in local_chain:
@@ -145,28 +164,30 @@ class Article:
                     if len(block.transactions) == 0:
                         pass 
                     else:
-                        transactions = block.transactions
-                        for publisher in transactions:
-                            if publisher['Name'] == user_publisher:
-                                return block
+                        if block.hash == token_block.generate_hash():
+                            transactions = block.transactions
+                            for publisher in transactions:
+                                if publisher['Name'] == user_publisher:
+                                    return block
     
     def view_publishers(seflf):
         for block in Spicee.chain:
                 if len(block.transactions) == 0:
                     pass 
                 else:
-                    transactions = block.transactions
-                    print('\n')
-                    print("Here are the current publishers: ")
-                    for publisher in transactions:
-                        print('-'*24)
-                        publisher_name = publisher['Name']
-                        publisher_genre = publisher['Genre']
-                        publisher_owner = publisher['Owners/Creators']
-                        print(publisher_name)
-                        print(publisher_genre)
-                        print(publisher_owner)
-                    print('\n')
+                    if block.hash == token_block.generate_hash():
+                        transactions = block.transactions
+                        print('\n')
+                        print("Here are the current publishers: ")
+                        for publisher in transactions:
+                            print('-'*24)
+                            publisher_name = publisher['Name']
+                            publisher_genre = publisher['Genre']
+                            publisher_owner = publisher['Owners/Creators']
+                            print(publisher_name)
+                            print(publisher_genre)
+                            print(publisher_owner)
+                        print('\n')
 
                                 
     def fetch_article(self):
@@ -208,5 +229,6 @@ class Article:
         
 test = Article()
 add_token()
-print(test.fetch_token())
+add_genre()
+print(test.view_articles())
 

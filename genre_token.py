@@ -14,6 +14,6 @@ genre = Genre()
 created_genre = genre.create_genre()
 
 print('Genre {} successfully made'.format(created_genre[0]))
-transactions = created_genre
+transactions = [created_genre]
 genre_block = Block(transactions, created_genre)
 
